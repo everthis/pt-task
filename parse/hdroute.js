@@ -15,7 +15,15 @@ async function hdrouteQueryParser(str) {
     const torrentCreatedAt = $(".torrent_added", el).html();
     const peersCount = $(".torrent_added_hour + .torrent_count", el).text();
     const downloadingCount = $(".torrent_count + .torrent_count", el).text();
-    const coverPic = $(".introForPic > img", el).attr("src");
+    let tmp = $(".introForPic > img", el).attr("src");
+    const coverPic = tmp.startsWith("http")
+      ? tmp
+      : "http://hdroute.org/img/theme1/default.jpg";
+    const torrentCategory = $(".torrent_category figure", el)
+      .attr("class")
+      .split("_")[1]
+      .slice(1);
+    const torrentSource = "hdroute";
     res.push({
       chsTitle,
       engTitle,
@@ -25,7 +33,9 @@ async function hdrouteQueryParser(str) {
       torrentCreatedAt,
       peersCount,
       downloadingCount,
-      coverPic
+      coverPic,
+      torrentCategory,
+      torrentSource
     });
   }
   return res;
