@@ -71,3 +71,9 @@ typings/
 
 # Serverless directories
 .serverless
+
+public/torrents/*
+!public/torrents/.gitkeep
+
+public/downloads/*
+!public/downloads/.gitkeep
