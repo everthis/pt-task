@@ -9,10 +9,10 @@ function downloadTorrentLink(id) {
 function filePath(name) {
   return path.resolve(__dirname, "..", "public", name);
 }
-async function downloadTorrent(id = 68390) {
+async function downloadTorrent(id = 0) {
   const cookie = await hdrCookie();
 
-  await downloadAttachment(downloadTorrentLink(id), cookie);
+  return await downloadAttachment(downloadTorrentLink(id), cookie);
 }
 
 module.exports = downloadTorrent;
