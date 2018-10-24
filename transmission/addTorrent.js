@@ -6,14 +6,20 @@ function addTorrent(fp) {
   let name = "";
   const fpath = path.join(__dirname, "..", "public", "torrents", name);
   return new Promise((reslove, reject) => {
-    transmission.addFile(fp, (err, res) => {
-      if (err) {
-        console.log(err);
-        reject(err);
-      } else {
-        reslove(res);
+    transmission.addFile(
+      fp,
+      {
+        "download-dir": "/mnt/wd8t"
+      },
+      (err, res) => {
+        if (err) {
+          console.log(err);
+          reject(err);
+        } else {
+          reslove(res);
+        }
       }
-    });
+    );
   });
 
   // { hashString: 'a9f3e1d3cdfb7957fcbe6de861438ee8b285f7b2',

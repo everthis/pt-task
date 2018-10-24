@@ -21,6 +21,7 @@ async function downloadAttachment(url, cookie) {
       for (var pair of r.headers.entries()) {
         hash[pair[0]] = pair[1];
       }
+      console.log(JSON.stringify(hash, null, 2));
       const idx = hash["content-disposition"].indexOf("filename=");
       const filenameWithQuotes = hash["content-disposition"]
         .slice(idx + 9)

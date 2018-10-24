@@ -5,6 +5,7 @@ const { hdrQueryFn } = require("./query/index");
 const { hdrTorrentDetailFn, ttgCoverFn } = require("./torrentDetail/index");
 
 const addTorrent = require("./transmission/addTorrent");
+const checkTorrentProgress = require("./transmission/checkTorrentProgress");
 const app = new Koa();
 const router = new Router();
 
@@ -22,6 +23,10 @@ router.get("/ttgCover", async (ctx, next) => {
 
 router.get("/addTorrent", async (ctx, next) => {
   ctx.body = await addTorrent(ctx);
+});
+
+router.get("/checkProgress", async (ctx, next) => {
+  ctx.body = await checkTorrentProgress(ctx);
 });
 
 app.use(router.routes()).use(router.allowedMethods());

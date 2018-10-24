@@ -6,15 +6,25 @@ const fetch = require("node-fetch");
 
 const { transmission } = require("./transmission/util");
 
-transmission.addFile(
-  "/home/everthis/projects/pt-task/public/torrents/%5BTTG%5D%20It%27s.a.Wonderful.Life.1994.720p.BluRay.x264-WiKi.torrent",
-  (err, res) => {
-    if (err) {
-      console.log(err);
+const checkTorrentProgress = require("./transmission/checkTorrentProgress");
+
+// transmission.addFile(
+//   "/home/everthis/projects/pt-task/public/torrents/%5BTTG%5D%20It%27s.a.Wonderful.Life.1994.720p.BluRay.x264-WiKi.torrent",
+//   (err, res) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     console.log(res);
+//   }
+// );
+
+checkTorrentProgress({
+  request: {
+    query: {
+      hash: "80239f38422b17d2f46429fce19881d838c02589"
     }
-    console.log(res);
   }
-);
+}).then(res => console.log(res));
 
 // fetch("http://127.0.0.1:3000/ttgCover?id=364865&source=ttg")
 //   .then(s => s.text())
