@@ -7,11 +7,11 @@ function checkTorrentProgress(ctx) {
       if (err) {
         reject(err);
       }
-      console.log(result);
       if (result.torrents.length > 0) {
         const torrent = result.torrents[0];
         const res = {
           name: torrent.name,
+          download_dir: torrent.downloadDir,
           download_rate: `${torrent.rateDownload / 1000} Mbps`,
           upload_rate: `${torrent.rateUpload / 1000} Mbps`,
           progress: `${torrent.percentDone * 100}%`,
@@ -31,6 +31,8 @@ function checkTorrentProgress(ctx) {
           ).toFixed(3)} Mbps`
         };
         resolve(res);
+      } else {
+        resolve({});
       }
     });
   });

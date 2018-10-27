@@ -8,6 +8,9 @@ const { transmission } = require("./transmission/util");
 
 const checkTorrentProgress = require("./transmission/checkTorrentProgress");
 
+const { findTargetFile } = require("./ffmpeg/findTargetFile");
+const { convertFn } = require("./ffmpeg/convert");
+
 // transmission.addFile(
 //   "/home/everthis/projects/pt-task/public/torrents/%5BTTG%5D%20It%27s.a.Wonderful.Life.1994.720p.BluRay.x264-WiKi.torrent",
 //   (err, res) => {
@@ -18,13 +21,13 @@ const checkTorrentProgress = require("./transmission/checkTorrentProgress");
 //   }
 // );
 
-checkTorrentProgress({
-  request: {
-    query: {
-      hash: "80239f38422b17d2f46429fce19881d838c02589"
-    }
-  }
-}).then(res => console.log(res));
+// checkTorrentProgress({
+//   request: {
+//     query: {
+//       hash: "80239f38422b17d2f46429fce19881d838c02589"
+//     }
+//   }
+// }).then(res => console.log(res));
 
 // fetch("http://127.0.0.1:3000/ttgCover?id=364865&source=ttg")
 //   .then(s => s.text())
@@ -43,3 +46,11 @@ checkTorrentProgress({
 
 // hset("ttg", "");
 // hset("hdroute", "");
+
+// findTargetFile("db1e460c8388b3ab2ccc59951070befaa6b7d1fa");
+// findTargetFile("d3033f402065e1f93b966c0df766d94737b306b6");
+
+console.log(convertFn);
+convertFn(
+  "/mnt/wd8t/21.Grams.2003.BluRay.720p.x264.DTS-WiKi/21.Grams.2003.BluRay.720p.x264.DTS-WiKi.mkv"
+);
