@@ -1,7 +1,8 @@
 const ffmpeg = require("fluent-ffmpeg");
 const path = require("path");
+const setTaskLog = require("../util/setTaskLog");
 
-function convertFn(fpath) {
+function convertFn({ fpath, hash }) {
   const extname = path.extname(fpath);
   return new ffmpeg(fpath)
     .videoBitrate("2500k")
@@ -12,8 +13,26 @@ function convertFn(fpath) {
     .on("error", function(err) {
       console.log("An error occurred: " + err.message);
     })
-    .on("end", function() {
+    .on("progress", async progress => {
+      console.log("Processing: " + progress.percent + "% done");
+      await setTaskLog({
+        hash,
+        step: "convert",
+        log: {
+          progress: progress.percent
+        }
+      });
+    })
+    .on("end", async res => {
+      console.log(JSON.stringify(res, null, 2));
       console.log("Processing finished !");
+      await setTaskLog({
+        hash,
+        step: "convert",
+        log: {
+          progress: 100
+        }
+      });
     })
     .save(
       `/home/everthis/projects/pt-task/public/downloads/${path.basename(

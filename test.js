@@ -51,6 +51,8 @@ const { convertFn } = require("./ffmpeg/convert");
 // findTargetFile("d3033f402065e1f93b966c0df766d94737b306b6");
 
 console.log(convertFn);
-convertFn(
-  "/mnt/wd8t/21.Grams.2003.BluRay.720p.x264.DTS-WiKi/21.Grams.2003.BluRay.720p.x264.DTS-WiKi.mkv"
-);
+convertFn({
+  fpath:
+    "/mnt/wd8t/21.Grams.2003.BluRay.720p.x264.DTS-WiKi/Sample/21.Grams.2003.BluRay.720p.x264.DTS-WiKi.Sample.mkv",
+  hash: "d1dcceae0a6b8127855ad1786d086acc6b9fc921"
+});
