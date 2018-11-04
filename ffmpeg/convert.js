@@ -8,7 +8,7 @@ function convertFn({ fpath, hash }) {
     .videoBitrate("2500k")
     .videoCodec("libx264")
     .size("?x720")
-    .audioCodec("libmp3lame")
+    .audioCodec("libfdk_aac")
     .audioBitrate("128k")
     .on("error", function(err) {
       console.log("An error occurred: " + err.message);
@@ -24,7 +24,6 @@ function convertFn({ fpath, hash }) {
       });
     })
     .on("end", async res => {
-      console.log(JSON.stringify(res, null, 2));
       console.log("Processing finished !");
       await setTaskLog({
         hash,

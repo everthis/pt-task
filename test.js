@@ -54,5 +54,5 @@ console.log(convertFn);
 convertFn({
   fpath:
     "/mnt/wd8t/21.Grams.2003.BluRay.720p.x264.DTS-WiKi/Sample/21.Grams.2003.BluRay.720p.x264.DTS-WiKi.Sample.mkv",
-  hash: "d1dcceae0a6b8127855ad1786d086acc6b9fc921"
+  hash: "ada8fd104d1b4457f5a54886e6fc839108e973c5"
 });
