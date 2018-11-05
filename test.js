@@ -11,6 +11,10 @@ const checkTorrentProgress = require("./transmission/checkTorrentProgress");
 const { findTargetFile } = require("./ffmpeg/findTargetFile");
 const { convertFn } = require("./ffmpeg/convert");
 
+const { aliUpload } = require("./upload/aliOss");
+
+const { bucketACL } = require("./aliOssAccess/private");
+
 // transmission.addFile(
 //   "/home/everthis/projects/pt-task/public/torrents/%5BTTG%5D%20It%27s.a.Wonderful.Life.1994.720p.BluRay.x264-WiKi.torrent",
 //   (err, res) => {
@@ -50,9 +54,15 @@ const { convertFn } = require("./ffmpeg/convert");
 // findTargetFile("db1e460c8388b3ab2ccc59951070befaa6b7d1fa");
 // findTargetFile("d3033f402065e1f93b966c0df766d94737b306b6");
 
-console.log(convertFn);
-convertFn({
-  fpath:
-    "/mnt/wd8t/21.Grams.2003.BluRay.720p.x264.DTS-WiKi/Sample/21.Grams.2003.BluRay.720p.x264.DTS-WiKi.Sample.mkv",
-  hash: "ada8fd104d1b4457f5a54886e6fc839108e973c5"
-});
+// convertFn({
+//   fpath:
+//     "/mnt/wd8t/The.Incredibles.2.2018.720p.BluRay.x264-WiKi/The.Incredibles.2.2018.720p.BluRay.x264-WiKi.mkv",
+//   hash: "ada8fd104d1b4457f5a54886e6fc839108e973c5"
+// });
+
+// aliUpload({
+//   filePath:
+//     "/home/everthis/projects/pt-task/public/downloads/The.Incredibles.2.2018.720p.BluRay.x264-WiKi.mp4"
+// });
+
+bucketACL();

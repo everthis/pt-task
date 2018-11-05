@@ -1,8 +1,7 @@
 require("dotenv").config();
 const wrapper = require("./wrapper");
 const { TTG_LOGIN_URL } = require("../util/constant");
-const TTG_USERNAME = process.env.TTG_USERNAME;
-const TTG_PASSWORD = process.env.TTG_PASSWORD;
+const { TTG_USERNAME, TTG_PASSWORD } = process.env;
 
 async function login(page) {
   await page.evaluate(
