@@ -23,6 +23,11 @@ async function bucketACL() {
   }
 }
 
+function getSignUrl(fname, options = {}) {
+  return client.signatureUrl(fname, options);
+}
+
 module.exports = {
+  getSignUrl,
   bucketACL
 };
