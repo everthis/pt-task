@@ -31,7 +31,7 @@ async function aliUpload({ hash, filePath }) {
         async progress(percentage, cpt) {
           await setUploadProgress({
             hash,
-            percentage
+            percentage: percentage * 100
           });
           console.log(percentage);
           checkpoint = cpt;
@@ -39,7 +39,7 @@ async function aliUpload({ hash, filePath }) {
       });
       await setUploadProgress({
         hash,
-        percentage: 1
+        percentage: 100
       });
       console.log(result);
       break; // break if success

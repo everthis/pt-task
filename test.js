@@ -15,9 +15,9 @@ const { aliUpload } = require("./upload/aliOss");
 
 const { bucketACL, client } = require("./aliOssAccess/private");
 
-// console.log(
-//   client.signatureUrl("The.Incredibles.2.2018.720p.BluRay.x264-WiKi.mp4")
-// );
+console.log(
+  client.signatureUrl("(500).Days.of.Summer.2009.Bluray.720p.DTS.x264-CHD.mp4")
+);
 
 // transmission.addFile(
 //   "/home/everthis/projects/pt-task/public/torrents/%5BTTG%5D%20It%27s.a.Wonderful.Life.1994.720p.BluRay.x264-WiKi.torrent",
@@ -58,15 +58,16 @@ const { bucketACL, client } = require("./aliOssAccess/private");
 // findTargetFile("db1e460c8388b3ab2ccc59951070befaa6b7d1fa");
 // findTargetFile("d3033f402065e1f93b966c0df766d94737b306b6");
 
-convertFn({
-  fpath:
-    "/mnt/wd6t/(500).Days.of.Summer.2009.Bluray.720p.DTS.x264-CHD/(500).Days.of.Summer.2009.Bluray.720p.DTS.x264-CHD.mkv",
-  hash: "ada8fd104d1b4457f5a54886e6fc839108e973c5"
-});
+// convertFn({
+//   fpath:
+//     "/mnt/wd6t/(500).Days.of.Summer.2009.Bluray.720p.DTS.x264-CHD/(500).Days.of.Summer.2009.Bluray.720p.DTS.x264-CHD.mkv",
+//   hash: "ada8fd104d1b4457f5a54886e6fc839108e973c5"
+// });
 
 // aliUpload({
+//   hash: "ada8fd104d1b4457f5a54886e6fc839108e973c5",
 //   filePath:
-//     "/home/everthis/projects/pt-task/public/downloads/The.Incredibles.2.2018.720p.BluRay.x264-WiKi.mp4"
+//     "/home/everthis/projects/pt-task/public/downloads/(500).Days.of.Summer.2009.Bluray.720p.DTS.x264-CHD.mp4"
 // });
 
 // bucketACL();
