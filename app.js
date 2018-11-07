@@ -6,6 +6,7 @@ const { hdrTorrentDetailFn, ttgCoverFn } = require("./torrentDetail/index");
 
 const addTorrent = require("./transmission/addTorrent");
 const checkTorrentProgress = require("./transmission/checkTorrentProgress");
+const { findTargetFile } = require("./ffmpeg/findTargetFile");
 const app = new Koa();
 const router = new Router();
 
@@ -27,6 +28,10 @@ router.get("/addTorrent", async (ctx, next) => {
 
 router.get("/checkProgress", async (ctx, next) => {
   ctx.body = await checkTorrentProgress(ctx);
+});
+
+router.get("/findTargetFile", async (ctx, next) => {
+  ctx.body = await findTargetFile(ctx);
 });
 
 app.use(router.routes()).use(router.allowedMethods());

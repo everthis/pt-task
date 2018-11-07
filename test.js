@@ -15,9 +15,9 @@ const { aliUpload } = require("./upload/aliOss");
 
 const { bucketACL, client } = require("./aliOssAccess/private");
 
-console.log(
-  client.signatureUrl("(500).Days.of.Summer.2009.Bluray.720p.DTS.x264-CHD.mp4")
-);
+// console.log(
+//   client.signatureUrl("(500).Days.of.Summer.2009.Bluray.720p.DTS.x264-CHD.mp4")
+// );
 
 // transmission.addFile(
 //   "/home/everthis/projects/pt-task/public/torrents/%5BTTG%5D%20It%27s.a.Wonderful.Life.1994.720p.BluRay.x264-WiKi.torrent",
@@ -55,7 +55,9 @@ console.log(
 // hset("ttg", "");
 // hset("hdroute", "");
 
-// findTargetFile("db1e460c8388b3ab2ccc59951070befaa6b7d1fa");
+findTargetFile("b7a19096be97227074fc311e7f388fbc3c8fe4be").then(r =>
+  console.log(r)
+);
 // findTargetFile("d3033f402065e1f93b966c0df766d94737b306b6");
 
 // convertFn({

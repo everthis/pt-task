@@ -14,7 +14,7 @@ function checkTorrentProgress(ctx) {
           download_dir: torrent.downloadDir,
           download_rate: `${torrent.rateDownload / 1000} Mbps`,
           upload_rate: `${torrent.rateUpload / 1000} Mbps`,
-          progress: `${torrent.percentDone * 100}%`,
+          progress: torrent.percentDone * 100,
           ETA: `${torrent.eta < 0 ? 0 : torrent.eta / 3600} h`,
           status: `${getStatusType(torrent.status)}`,
           total_size: `${(
