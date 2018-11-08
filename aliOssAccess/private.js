@@ -1,5 +1,6 @@
 require("dotenv").config();
 const OSS = require("ali-oss");
+const path = require("path");
 const {
   ALI_OSS_REGION,
   ALI_OSS_ACCESS_KEY_ID,
@@ -11,7 +12,8 @@ const client = new OSS({
   region: ALI_OSS_REGION,
   accessKeyId: ALI_OSS_ACCESS_KEY_ID,
   accessKeySecret: ALI_OSS_ACCESS_KEY_SECRET,
-  bucket: ALI_OSS_BUCKET
+  bucket: ALI_OSS_BUCKET,
+  secure: true
 });
 
 async function bucketACL() {
@@ -29,7 +31,8 @@ function getSignUrl(
     expires: 1800 * 5
   }
 ) {
-  return client.signatureUrl(fname, options);
+  const fileName = path.basename(fname);
+  return client.signatureUrl(fileName, options);
 }
 
 module.exports = {

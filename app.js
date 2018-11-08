@@ -7,6 +7,9 @@ const { hdrTorrentDetailFn, ttgCoverFn } = require("./torrentDetail/index");
 const addTorrent = require("./transmission/addTorrent");
 const checkTorrentProgress = require("./transmission/checkTorrentProgress");
 const { findTargetFile } = require("./ffmpeg/findTargetFile");
+const { convertFn } = require("./ffmpeg/convert");
+const { aliUpload } = require("./upload/aliOss");
+const { getSignUrl } = require("./aliOssAccess/private");
 const app = new Koa();
 const router = new Router();
 
@@ -32,6 +35,24 @@ router.get("/checkProgress", async (ctx, next) => {
 
 router.get("/findTargetFile", async (ctx, next) => {
   ctx.body = await findTargetFile(ctx);
+});
+
+router.get("/convert", async (ctx, next) => {
+  const { fpath, hash } = ctx.request.query;
+  ctx.body = await convertFn({ fpath, hash });
+});
+
+router.get("/upload", async (ctx, next) => {
+  const { fpath, hash } = ctx.request.query;
+  ctx.body = await aliUpload({
+    fpath,
+    hash
+  });
+});
+
+router.get("/getSignUrl", async (ctx, next) => {
+  const { fpath } = ctx.request.query;
+  ctx.body = getSignUrl(fpath);
 });
 
 app.use(router.routes()).use(router.allowedMethods());

@@ -55,9 +55,9 @@ const { bucketACL, client } = require("./aliOssAccess/private");
 // hset("ttg", "");
 // hset("hdroute", "");
 
-findTargetFile("b7a19096be97227074fc311e7f388fbc3c8fe4be").then(r =>
-  console.log(r)
-);
+// findTargetFile("b7a19096be97227074fc311e7f388fbc3c8fe4be").then(r =>
+//   console.log(r)
+// );
 // findTargetFile("d3033f402065e1f93b966c0df766d94737b306b6");
 
 // convertFn({

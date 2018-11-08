@@ -31,7 +31,7 @@ async function findTargetFile(hash) {
     step: "findTargetFile",
     log: {
       progress: 100,
-      fileName: targetFile
+      fpath: targetFile
     }
   });
   return targetFile;

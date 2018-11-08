@@ -21,32 +21,36 @@ function setUploadProgress({ hash, percentage }) {
     }
   });
 }
-async function aliUpload({ hash, filePath }) {
-  const fileName = path.basename(filePath);
-  // retry 5 times
-  for (let i = 0; i < 5; i++) {
-    try {
-      const result = await client.multipartUpload(fileName, filePath, {
-        checkpoint,
-        async progress(percentage, cpt) {
-          await setUploadProgress({
-            hash,
-            percentage: percentage * 100
-          });
-          console.log(percentage);
-          checkpoint = cpt;
-        }
-      });
-      await setUploadProgress({
-        hash,
-        percentage: 100
-      });
-      console.log(result);
-      break; // break if success
-    } catch (e) {
-      console.log(e);
+async function aliUpload({ hash, fpath }) {
+  return new Promise(async (resolve, reject) => {
+    const fileName = path.basename(fpath);
+    // retry 5 times
+    for (let i = 0; i < 5; i++) {
+      try {
+        const result = await client.multipartUpload(fileName, fpath, {
+          checkpoint,
+          async progress(percentage, cpt) {
+            await setUploadProgress({
+              hash,
+              percentage: percentage * 100
+            });
+            console.log(percentage);
+            checkpoint = cpt;
+          }
+        });
+        await setUploadProgress({
+          hash,
+          percentage: 100
+        });
+        resolve("");
+        console.log(result);
+        break; // break if success
+      } catch (e) {
+        console.log(e);
+      }
+      reject("");
     }
-  }
+  });
 }
 
 module.exports = { aliUpload };
