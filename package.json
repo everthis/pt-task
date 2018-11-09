@@ -19,6 +19,7 @@
   "homepage": "https://github.com/everthis/pt-task#readme",
   "dependencies": {
     "ali-oss": "^6.0.1",
+    "bull": "^3.4.8",
     "cheerio": "^1.0.0-rc.2",
     "dotenv": "^6.0.0",
     "fluent-ffmpeg": "^2.1.2",

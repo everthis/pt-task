@@ -1,8 +1,13 @@
-const ffmpeg = require("fluent-ffmpeg");
+require("dotenv").config();
 const path = require("path");
+const bull = require("bull");
+const ffmpeg = require("fluent-ffmpeg");
 const setTaskLog = require("../util/setTaskLog");
+const { REDIS_HOST_PORT } = process.env;
+const convertQueue = new bull("convert", REDIS_HOST_PORT);
 
-function convertFn({ fpath, hash }) {
+convertQueue.process(job => {
+  const { fpath, hash } = job.data;
   const extname = path.extname(fpath);
   const mp4FilePath = `/home/everthis/projects/pt-task/public/downloads/${path.basename(
     fpath,
@@ -44,5 +49,9 @@ function convertFn({ fpath, hash }) {
       })
       .save(mp4FilePath);
   });
+});
+
+function convertFn({ fpath, hash }) {
+  return convertQueue.add({ fpath, hash });
 }
 module.exports = { convertFn };
