@@ -17,6 +17,7 @@ uploadQueue.process(function(job) {
           async progress(percentage, cpt) {
             await setUploadProgress({
               hash,
+              fileName,
               percentage: percentage * 100
             });
             console.log(percentage);
@@ -25,6 +26,7 @@ uploadQueue.process(function(job) {
         });
         await setUploadProgress({
           hash,
+          fileName,
           percentage: 100
         });
         resolve("");
@@ -48,17 +50,19 @@ const client = new OSS({
 
 let checkpoint;
 
-function setUploadProgress({ hash, percentage }) {
+function setUploadProgress({ hash, percentage, fileName }) {
   return setTaskLog({
     hash,
     step: "upload",
     log: {
+      fileName,
       progress: percentage
     }
   });
 }
 async function aliUpload({ hash, fpath }) {
-  return uploadQueue.add({ hash, fpath });
+  const p = decodeURIComponent(fpath);
+  return uploadQueue.add({ hash, fpath: p });
 }
 
 module.exports = { aliUpload };

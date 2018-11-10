@@ -52,6 +52,7 @@ convertQueue.process(job => {
 });
 
 function convertFn({ fpath, hash }) {
-  return convertQueue.add({ fpath, hash });
+  const p = decodeURIComponent(fpath);
+  return convertQueue.add({ fpath: p, hash });
 }
 module.exports = { convertFn };

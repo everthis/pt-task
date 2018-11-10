@@ -52,7 +52,8 @@ router.get("/upload", async (ctx, next) => {
 
 router.get("/getSignUrl", async (ctx, next) => {
   const { fpath } = ctx.request.query;
-  ctx.body = getSignUrl(fpath);
+  const p = decodeURIComponent(fpath);
+  ctx.body = getSignUrl(p);
 });
 
 app.use(router.routes()).use(router.allowedMethods());

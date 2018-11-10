@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const checkTorrentProgress = require("../transmission/checkTorrentProgress");
 const { walk, isDir } = require("../util/fsUtil");
-const { setTaskLog } = require("../util/setTaskLog");
+const setTaskLog = require("../util/setTaskLog");
 
 async function findTargetFile(hash) {
   const payload =
