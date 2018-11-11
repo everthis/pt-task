@@ -6,6 +6,7 @@ const { hdrTorrentDetailFn, ttgCoverFn } = require("./torrentDetail/index");
 
 const addTorrent = require("./transmission/addTorrent");
 const checkTorrentProgress = require("./transmission/checkTorrentProgress");
+const removeTorrentAndData = require("./transmission/removeTorrentAndData");
 const { findTargetFile } = require("./ffmpeg/findTargetFile");
 const { convertFn } = require("./ffmpeg/convert");
 const { aliUpload } = require("./upload/aliOss");
@@ -27,6 +28,11 @@ router.get("/ttgCover", async (ctx, next) => {
 
 router.get("/addTorrent", async (ctx, next) => {
   ctx.body = await addTorrent(ctx);
+});
+
+router.get("/removeTorrentAndData", async (ctx, next) => {
+  const { hash } = ctx.request.query;
+  ctx.body = await removeTorrentAndData(hash);
 });
 
 router.get("/checkProgress", async (ctx, next) => {

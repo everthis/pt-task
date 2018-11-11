@@ -6,7 +6,8 @@ function cFetch({ cookie, url, type = "json" }) {
   return fetch(`${url}`, {
     headers: {
       cookie
-    }
+    },
+    redirect: "follow"
   }).then(r => (type === "json" ? r.json() : r.text()));
 }
 

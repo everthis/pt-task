@@ -1,6 +1,7 @@
 require("dotenv").config();
 const OSS = require("ali-oss");
 const path = require("path");
+const fs = require("fs");
 const bull = require("bull");
 const { REDIS_HOST_PORT } = process.env;
 const uploadQueue = new bull("upload", REDIS_HOST_PORT);
@@ -28,6 +29,15 @@ uploadQueue.process(function(job) {
           hash,
           fileName,
           percentage: 100
+        });
+        fs.unlinkSync(fpath);
+        await setTaskLog({
+          hash,
+          step: "removeConvertedFile",
+          log: {
+            fileName,
+            progress: 100
+          }
         });
         resolve("");
         console.log(result);

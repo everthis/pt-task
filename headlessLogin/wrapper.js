@@ -18,7 +18,9 @@ async function headlessLogin(payload, ...cbFnArr) {
 
   await payload.loginAction(page);
 
-  await page.waitForNavigation();
+  await page.waitForNavigation({
+    waitUntil: "domcontentloaded"
+  });
   // await page.goto(MY_TTG_PAGE_URL, {
   //   waitUntil: "networkidle0"
   // });
