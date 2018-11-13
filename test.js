@@ -3,6 +3,9 @@ const hdrQuery = require("./query/hdroute");
 const hdrQueryParse = require("./parse/hdroute");
 const { hget, hset } = require("./store/redis");
 const fetch = require("node-fetch");
+const Tesseract = require("tesseract.js");
+const fs = require("fs");
+const path = require("path");
 
 const { transmission } = require("./transmission/util");
 
@@ -14,6 +17,19 @@ const { convertFn } = require("./ffmpeg/convert");
 const { aliUpload } = require("./upload/aliOss");
 
 const { bucketACL, client } = require("./aliOssAccess/private");
+
+// const captcha = require("./cap");
+// const buf = fs.readFileSync("cap1.png");
+
+// const pixMap = captcha.getPixelMapFromBuffer(buf);
+
+// console.log(captcha.getCaptcha(pixMap));
+
+// const imgPath = path.join(__dirname, "test_1.jpg");
+// console.log(imgPath);
+// Tesseract.recognize(imgPath).then(function(result) {
+//   console.log(result);
+// });
 
 // console.log(
 //   client.signatureUrl("(500).Days.of.Summer.2009.Bluray.720p.DTS.x264-CHD.mp4")

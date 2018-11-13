@@ -24,12 +24,15 @@
     "dotenv": "^6.0.0",
     "fluent-ffmpeg": "^2.1.2",
     "form-data": "^2.3.2",
+    "gm": "^1.23.1",
     "koa": "^2.5.3",
     "koa-router": "^7.4.0",
     "node-fetch": "^2.2.0",
+    "node-tesseract": "^0.2.7",
     "puppeteer": "^1.8.0",
     "redis": "^2.8.0",
     "request": "^2.88.0",
+    "tesseract.js": "^1.0.10",
     "transmission": "^0.4.9"
   }
 }
