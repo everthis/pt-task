@@ -1,7 +1,7 @@
 const cheerio = require("cheerio");
 async function hdchinaQueryParser(str) {
   const $ = cheerio.load(str);
-  const dls = $("#form_torrent tbody > tr");
+  const dls = $("#form_torrent > .torrent_list > tbody > tr");
   const dlsArr = Array.prototype.slice.call(dls, 1);
   const res = [];
 
@@ -17,12 +17,10 @@ async function hdchinaQueryParser(str) {
     }
   });
 
-  console.log(opts);
   for (let el of dlsArr) {
     const chsTitle = $("td.t_name tr > td:nth-child(2) h4", el).text();
     const engTitle = $("td.t_name tr > td:nth-child(2) h3 a", el).text();
-    console.log(engTitle);
-    const torrentId = $("td.t_name tr > td:nth-child(2) h3 a", el)
+    const torrentId = $("td.t_name .t_pin + td h3 a", el)
       .attr("href")
       .split("&")[0]
       .split("=")[1];
