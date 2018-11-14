@@ -1,13 +1,17 @@
 const hdrTorrentDetail = require("./hdroute");
+const hdcTorrentDetail = require("./hdchina");
 const ttgTorrentDetail = require("./ttg");
 const hdrLogin = require("../headlessLogin/hdroute");
+const hdcLogin = require("../headlessLogin/hdchina");
 const ttgLogin = require("../headlessLogin/ttg");
 const hdrDetailParse = require("../parse/hdrouteTorrentDetail");
+const hdcDetailParse = require("../parse/hdchinaTorrentDetail");
 const ttgDetailParse = require("../parse/ttgTorrentDetail");
 const ttgCoverParse = require("../parse/ttgTorrentCover");
+const hdcCoverParse = require("../parse/hdchinaTorrentCover");
 const { hget, hset } = require("../store/redis");
 
-async function hdrTorrentDetailFn(ctx) {
+async function torrentDetailFn(ctx) {
   const { id, source } = ctx.request.query;
 
   if (source === "hdroute") {
@@ -18,6 +22,16 @@ async function hdrTorrentDetailFn(ctx) {
     }
     const htmlStr = await hdrTorrentDetail(cookie, id);
     return hdrDetailParse(htmlStr);
+  }
+
+  if (source === "hdchina") {
+    let cookie = await hget("hdchina");
+    if (!cookie) {
+      cookie = (await hdcLogin())[0];
+      await hset("hdchina", cookie);
+    }
+    const htmlStr = await hdcTorrentDetail(cookie, id);
+    return hdcDetailParse(htmlStr);
   }
 
   if (source === "ttg") {
@@ -45,7 +59,22 @@ async function ttgCoverFn(ctx) {
   }
 }
 
+async function hdcCoverFn(ctx) {
+  const { id, source } = ctx.request.query;
+
+  if (source === "hdchina") {
+    let cookie = await hget("hdchina");
+    if (!cookie) {
+      cookie = (await hdcLogin())[0];
+      await hset("hdchina", cookie);
+    }
+    const htmlStr = await hdcTorrentDetail(cookie, id);
+    return hdcCoverParse(htmlStr);
+  }
+}
+
 module.exports = {
-  hdrTorrentDetailFn,
-  ttgCoverFn
+  torrentDetailFn,
+  ttgCoverFn,
+  hdcCoverFn
 };
