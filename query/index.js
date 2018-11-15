@@ -10,7 +10,7 @@ const ttgParse = require("../parse/ttg");
 const { hget, hset } = require("../store/redis");
 
 async function hdrQueryFn(ctx) {
-  const crqk = (ctx.request.query || {}).keyword;
+  const { keyword: crqk, site } = ctx.request.query;
   // HDR
   let hdrCookie = await hget("hdroute");
   if (!hdrCookie) {
@@ -32,20 +32,34 @@ async function hdrQueryFn(ctx) {
     await hset("hdchina", hdcCookie);
   }
 
-  return await Promise.all([
-    hdrQuery(hdrCookie, crqk),
-    ttgQuery(ttgCookie, crqk),
-    hdcQuery(hdcCookie, crqk)
-  ])
+  const queryArr = [];
+  const parseArr = [];
+  if (site === "hdchina") {
+    queryArr.push(hdcQuery(hdcCookie, crqk));
+    parseArr.push(hdcParse);
+  } else if (site === "ttg") {
+    queryArr.push(ttgQuery(ttgCookie, crqk));
+    parseArr.push(ttgParse);
+  } else if (site === "hdroute") {
+    queryArr.push(hdrQuery(hdrCookie, crqk));
+    parseArr.push(hdrParse);
+  } else {
+    queryArr.push(
+      hdcQuery(hdcCookie, crqk),
+      ttgQuery(ttgCookie, crqk),
+      hdrQuery(hdrCookie, crqk)
+    );
+    parseArr.push(hdcParse, ttgParse, hdrParse);
+  }
+
+  return await Promise.all(queryArr)
     .then(arr => {
-      return Promise.all([
-        hdrParse(arr[0]),
-        ttgParse(arr[1]),
-        hdcParse(arr[2])
-      ]);
+      return Promise.all(arr.map((el, idx) => parseArr[idx](el)));
     })
     .then(arr => {
-      return arr[2].concat(arr[1]).concat(arr[0]);
+      return arr.reduce((ac, el) => {
+        return ac.concat(el);
+      }, []);
     });
 }
 

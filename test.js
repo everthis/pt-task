@@ -18,6 +18,10 @@ const { aliUpload } = require("./upload/aliOss");
 
 const { bucketACL, client } = require("./aliOssAccess/private");
 
+fetch("http://localhost:3000/torrentDetail?id=282806&source=hdchina")
+  .then(r => r.json())
+  .then(r => console.log(r))
+  .catch(err => console.log(err));
 // const captcha = require("./cap");
 // const buf = fs.readFileSync("cap1.png");
 

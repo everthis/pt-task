@@ -1,4 +1,5 @@
 const hdrLogin = require("../headlessLogin/hdroute");
+const hdcLogin = require("../headlessLogin/hdchina");
 const ttgLogin = require("../headlessLogin/ttg");
 const { hget, hset } = require("../store/redis");
 async function hdrCookie() {
@@ -19,7 +20,17 @@ async function ttgCookie() {
   return cookie;
 }
 
+async function hdcCookie() {
+  let cookie = await hget("hdchina");
+  if (!cookie) {
+    cookie = (await hdcLogin())[0];
+    await hset("hdchina", cookie);
+  }
+  return cookie;
+}
+
 module.exports = {
   hdrCookie,
-  ttgCookie
+  ttgCookie,
+  hdcCookie
 };

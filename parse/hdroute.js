@@ -16,9 +16,10 @@ async function hdrouteQueryParser(str) {
     const peersCount = $(".torrent_added_hour + .torrent_count", el).text();
     const downloadingCount = $(".torrent_count + .torrent_count", el).text();
     let tmp = $(".introForPic > img", el).attr("src");
-    const coverPic = tmp.startsWith("http")
-      ? tmp
-      : "http://hdroute.org/img/theme1/default.jpg";
+    const coverPic =
+      tmp && tmp.startsWith("http")
+        ? tmp
+        : "http://hdroute.org/img/theme1/default.jpg";
     const torrentCategory = $(".torrent_category figure", el)
       .attr("class")
       .split("_")[1]

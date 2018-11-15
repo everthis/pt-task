@@ -20,11 +20,7 @@ convertQueue.process(job => {
       .size("?x720")
       .audioCodec("libfdk_aac")
       .audioBitrate("128k")
-      .outputOptions([
-        "-deadline realtime",
-        `-vf subtitles=${fpath}`,
-        "-error-resilient 1"
-      ])
+      .outputOptions([`-vf subtitles=${fpath}`])
       .on("error", err => {
         console.log("An error occurred: " + err.message);
         reject(err);

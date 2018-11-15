@@ -1,7 +1,7 @@
 const cheerio = require("cheerio");
 async function hdchinaTorrentCoverParser(str) {
   const $ = cheerio.load(str);
-  const res = $(".poster_box .imgbox img").attr("src");
+  const res = $("#main .details-poster-section img").attr("src");
 
   return res;
 }

@@ -9,7 +9,9 @@ const hdcDetailParse = require("../parse/hdchinaTorrentDetail");
 const ttgDetailParse = require("../parse/ttgTorrentDetail");
 const ttgCoverParse = require("../parse/ttgTorrentCover");
 const hdcCoverParse = require("../parse/hdchinaTorrentCover");
+const hdrCoverParse = require("../parse/hdrouteTorrentCover");
 const { hget, hset } = require("../store/redis");
+const { stringify } = JSON;
 
 async function torrentDetailFn(ctx) {
   const { id, source } = ctx.request.query;
@@ -21,7 +23,10 @@ async function torrentDetailFn(ctx) {
       await hset("hdroute", cookie);
     }
     const htmlStr = await hdrTorrentDetail(cookie, id);
-    return hdrDetailParse(htmlStr);
+    return stringify({
+      detailHtml: await hdrDetailParse(htmlStr),
+      cover: await hdrCoverParse(htmlStr)
+    });
   }
 
   if (source === "hdchina") {
@@ -31,7 +36,10 @@ async function torrentDetailFn(ctx) {
       await hset("hdchina", cookie);
     }
     const htmlStr = await hdcTorrentDetail(cookie, id);
-    return hdcDetailParse(htmlStr);
+    return stringify({
+      detailHtml: await hdcDetailParse(htmlStr),
+      cover: await hdcCoverParse(htmlStr)
+    });
   }
 
   if (source === "ttg") {
@@ -41,7 +49,10 @@ async function torrentDetailFn(ctx) {
       await hset("ttg", cookie);
     }
     const htmlStr = await ttgTorrentDetail(cookie, id);
-    return ttgDetailParse(htmlStr);
+    return stringify({
+      detailHtml: await ttgDetailParse(htmlStr),
+      cover: await ttgCoverParse(htmlStr)
+    });
   }
 }
 
@@ -73,8 +84,23 @@ async function hdcCoverFn(ctx) {
   }
 }
 
+async function hdrCoverFn(ctx) {
+  const { id, source } = ctx.request.query;
+
+  if (source === "hdroute") {
+    let cookie = await hget("hdroute");
+    if (!cookie) {
+      cookie = (await hdrLogin())[0];
+      await hset("hdroute", cookie);
+    }
+    const htmlStr = await hdrTorrentDetail(cookie, id);
+    return hdrCoverParse(htmlStr);
+  }
+}
+
 module.exports = {
   torrentDetailFn,
+  hdrCoverFn,
   ttgCoverFn,
   hdcCoverFn
 };
