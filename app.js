@@ -15,6 +15,8 @@ const { findTargetFile } = require("./ffmpeg/findTargetFile");
 const { convertFn } = require("./ffmpeg/convert");
 const { aliUpload } = require("./upload/aliOss");
 const { getSignUrl } = require("./aliOssAccess/private");
+const isLocal = process.env.NODE_ENV === "production" ? true : false;
+const listenHost = isLocal ? "localhost" : "everthis.com";
 const app = new Koa();
 const router = new Router();
 
@@ -73,4 +75,4 @@ router.get("/getSignUrl", async (ctx, next) => {
 
 app.use(router.routes()).use(router.allowedMethods());
 
-app.listen(3000);
+app.listen(3000, listenHost);
