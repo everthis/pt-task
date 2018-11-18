@@ -16,7 +16,7 @@ const { convertFn } = require("./ffmpeg/convert");
 const { aliUpload } = require("./upload/aliOss");
 const { getSignUrl } = require("./aliOssAccess/private");
 const isLocal = process.env.NODE_ENV === "production" ? false : true;
-const listenHost = isLocal ? "localhost" : "everthis.com";
+const listenHost = isLocal ? "localhost" : "0.0.0.0";
 const app = new Koa();
 const router = new Router();
 
