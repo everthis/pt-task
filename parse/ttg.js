@@ -50,6 +50,7 @@ async function ttgQueryParser(str) {
   } catch (err) {
     console.log(err);
     return {
+      _type: "timeout",
       total: "error",
       source: torrentSource,
       list: []
