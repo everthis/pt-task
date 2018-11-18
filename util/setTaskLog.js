@@ -1,6 +1,6 @@
 const fetch = require("node-fetch");
 const { stringify } = JSON;
-const isLocal = process.env.NODE_ENV === "production" ? true : false;
+const isLocal = process.env.NODE_ENV === "production" ? false : true;
 
 let origin = "";
 if (isLocal) {
