@@ -58,9 +58,9 @@ function composeFfmpegProcess(
     .on("start", commandLine => {
       console.log("Ffmpeg starting conversion with command: " + commandLine);
     })
-    // .on("stderr", stderrLine => {
-    //   console.log("Stderr output: " + stderrLine);
-    // })
+    .on("stderr", stderrLine => {
+      console.log("Stderr output: " + stderrLine);
+    })
     .on("error", err => {
       console.log("An error occurred: " + err.message);
       reject(err);
