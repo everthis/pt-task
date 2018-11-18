@@ -1,8 +1,15 @@
 const fetch = require("node-fetch");
 const { stringify } = JSON;
+const isLocal = process.env.NODE_ENV === "production" ? true : false;
 
+let origin = "";
+if (isLocal) {
+  origin = "http://localhost:8678";
+} else {
+  origin = "https://www.everthis.com";
+}
 async function setTaskLog(payload) {
-  return await fetch("http://localhost:8678/set_pt_task_log", {
+  return await fetch(`${origin}/set_pt_task_log`, {
     method: "post",
     headers: {
       "Content-Type": "application/json"

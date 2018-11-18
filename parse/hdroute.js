@@ -2,8 +2,13 @@ const cheerio = require("cheerio");
 async function hdrouteQueryParser(str) {
   const $ = cheerio.load(str);
   const dls = $("#unsticky-torrent-table > dl");
+  const total = $("#pager-top > p > span a:last-child b")
+    .text()
+    .split("-")[1]
+    .trim();
   const dlsArr = Array.prototype.slice.call(dls);
   const res = [];
+  const torrentSource = "hdroute";
   for (let el of dlsArr) {
     const chsTitle = $(".title_chs", el).text();
     const engTitle = $(".title_eng", el).text();
@@ -24,7 +29,6 @@ async function hdrouteQueryParser(str) {
       .attr("class")
       .split("_")[1]
       .slice(1);
-    const torrentSource = "hdroute";
     res.push({
       chsTitle,
       engTitle,
@@ -39,7 +43,11 @@ async function hdrouteQueryParser(str) {
       torrentSource
     });
   }
-  return res;
+  return {
+    total,
+    source: torrentSource,
+    list: res
+  };
 }
 
 module.exports = hdrouteQueryParser;

@@ -1,7 +1,7 @@
 const Koa = require("koa");
 const Router = require("koa-router");
 
-const { hdrQueryFn } = require("./query/index");
+const { queryFn } = require("./query/index");
 const {
   torrentDetailFn,
   ttgCoverFn,
@@ -19,7 +19,7 @@ const app = new Koa();
 const router = new Router();
 
 router.get("/query", async (ctx, next) => {
-  ctx.body = await hdrQueryFn(ctx);
+  ctx.body = await queryFn(ctx);
 });
 
 router.get("/torrentDetail", async (ctx, next) => {
@@ -53,6 +53,7 @@ router.get("/findTargetFile", async (ctx, next) => {
 
 router.get("/convert", async (ctx, next) => {
   const { fpath, hash } = ctx.request.query;
+  console.log("convert: ", hash);
   ctx.body = await convertFn({ fpath, hash });
 });
 

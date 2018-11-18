@@ -11,6 +11,8 @@ function checkTorrentProgress(ctx) {
         const torrent = result.torrents[0];
         const res = {
           name: torrent.name,
+          start_ts: torrent.addedDate * 1000,
+          end_ts: new Date().getTime(),
           download_dir: torrent.downloadDir,
           download_rate: `${torrent.rateDownload / 1000} Mbps`,
           upload_rate: `${torrent.rateUpload / 1000} Mbps`,

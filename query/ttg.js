@@ -3,7 +3,7 @@ const formGetAction = require("../util/formGetAction");
 function mkQueryLink(keyword) {
   return `https://totheglory.im/browse.php?search_field=${formGetAction(
     keyword
-  )}&c=M`;
+  )}&c=M&sort=7&type=desc`;
 }
 
 async function ttgQuery(cookie, keyword = "wonderful") {

@@ -1,6 +1,14 @@
 const path = require("path");
 const { transmission } = require("./util");
 const downloadTorrentFn = require("./downloadTorrent");
+const isLocal = process.env.NODE_ENV === "production" ? true : false;
+
+let downloadDir = "";
+if (isLocal) {
+  downloadDir = "/mnt/wd8t";
+} else {
+  downloadDir = "/var/lib/transmission-daemon/downloads";
+}
 
 function addTorrent(fp) {
   let name = "";
@@ -9,7 +17,7 @@ function addTorrent(fp) {
     transmission.addFile(
       fp,
       {
-        "download-dir": "/mnt/wd8t"
+        "download-dir": downloadDir
       },
       (err, res) => {
         if (err) {

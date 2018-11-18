@@ -28,7 +28,7 @@ async function bucketACL() {
 function getSignUrl(
   fname,
   options = {
-    expires: 1800 * 5
+    expires: 3600 * 3
   }
 ) {
   const fileName = path.basename(fname);

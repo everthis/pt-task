@@ -23,9 +23,15 @@ async function findTargetFile(hash) {
   } else {
     fileArr.push(fp);
   }
-  const targetFile = fileArr.sort((a, b) => {
+  let targetFile = fileArr.sort((a, b) => {
     return fs.statSync(b).size - fs.statSync(a).size;
   })[0];
+  // no need to process whitespace
+  // if (targetFile.indexOf(" ") !== -1) {
+  //   const newTargetFile = targetFile.replace(/\s/g, "_").replace(/['"]/g, "");
+  //   fs.renameSync(targetFile, newTargetFile);
+  //   targetFile = newTargetFile;
+  // }
   await setTaskLog({
     hash: payload.request.query.hash,
     step: "findTargetFile",

@@ -7,9 +7,10 @@ const ttgLogin = require("../headlessLogin/ttg");
 const hdcParse = require("../parse/hdchina");
 const hdrParse = require("../parse/hdroute");
 const ttgParse = require("../parse/ttg");
+const raceWithTimeout = require("../util/raceWithTimeout");
 const { hget, hset } = require("../store/redis");
 
-async function hdrQueryFn(ctx) {
+async function queryFn(ctx) {
   const { keyword: crqk, site } = ctx.request.query;
   // HDR
   let hdrCookie = await hget("hdroute");
@@ -31,6 +32,30 @@ async function hdrQueryFn(ctx) {
     hdcCookie = (await hdcLogin())[0];
     await hset("hdchina", hdcCookie);
   }
+
+  const promiseArr = [];
+  if (site === "hdchina") {
+    const hdcQueryAndParse = hdcQuery(hdcCookie, crqk).then(hdcParse);
+    promiseArr.push(raceWithTimeout("hdchina", hdcQueryAndParse));
+  } else if (site === "ttg") {
+    const ttgQueryAndParse = ttgQuery(ttgCookie, crqk).then(ttgParse);
+    promiseArr.push(raceWithTimeout("ttg", ttgQueryAndParse));
+  } else if (site === "hdroute") {
+    const hdrQueryAndParse = hdrQuery(hdrCookie, crqk).then(hdrParse);
+    promiseArr.push(raceWithTimeout("hdroute", hdrQueryAndParse));
+  } else {
+    promiseArr.push(
+      raceWithTimeout("hdchina", hdcQuery(hdcCookie, crqk).then(hdcParse)),
+      raceWithTimeout("ttg", ttgQuery(ttgCookie, crqk).then(ttgParse)),
+      raceWithTimeout("hdroute", hdrQuery(hdrCookie, crqk).then(hdrParse))
+    );
+  }
+
+  return await Promise.all(promiseArr).then(arr => {
+    return arr.reduce((ac, el) => {
+      return ac.concat(el);
+    }, []);
+  });
 
   const queryArr = [];
   const parseArr = [];
@@ -64,5 +89,5 @@ async function hdrQueryFn(ctx) {
 }
 
 module.exports = {
-  hdrQueryFn
+  queryFn
 };

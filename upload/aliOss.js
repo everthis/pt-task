@@ -17,6 +17,7 @@ const client = new OSS({
 uploadQueue.process(function(job) {
   const { hash, fpath } = job.data;
   let checkpoint = undefined;
+  const startTs = new Date().getTime();
   return new Promise(async (resolve, reject) => {
     const fileName = path.basename(fpath);
     // retry 5 times
@@ -28,6 +29,8 @@ uploadQueue.process(function(job) {
             await setUploadProgress({
               hash,
               fileName,
+              start_ts: startTs,
+              end_ts: new Date().getTime(),
               percentage: percentage * 100
             });
             console.log(percentage);
@@ -37,6 +40,8 @@ uploadQueue.process(function(job) {
         await setUploadProgress({
           hash,
           fileName,
+          start_ts: startTs,
+          end_ts: new Date().getTime(),
           percentage: 100
         });
         fs.unlinkSync(fpath);
@@ -59,12 +64,14 @@ uploadQueue.process(function(job) {
   });
 });
 
-function setUploadProgress({ hash, percentage, fileName }) {
+function setUploadProgress({ hash, percentage, fileName, start_ts, end_ts }) {
   return setTaskLog({
     hash,
     step: "upload",
     log: {
       fileName,
+      start_ts,
+      end_ts,
       progress: percentage
     }
   });

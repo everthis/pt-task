@@ -2,6 +2,10 @@ const cheerio = require("cheerio");
 async function hdchinaQueryParser(str) {
   const $ = cheerio.load(str);
   const dls = $("#form_torrent > .torrent_list > tbody > tr");
+  const records = $("#form_torrent .pagination li:nth-last-child(2) a")
+    .text()
+    .split("-")[1]
+    .trim();
   const dlsArr = Array.prototype.slice.call(dls, 1);
   const res = [];
 
@@ -17,6 +21,7 @@ async function hdchinaQueryParser(str) {
     }
   });
 
+  const torrentSource = "hdchina";
   for (let el of dlsArr) {
     const chsTitle = $("td.t_name tr > td:nth-child(2) h4", el).text();
     const engTitle = $("td.t_name tr > td:nth-child(2) h3 a", el).text();
@@ -31,7 +36,6 @@ async function hdchinaQueryParser(str) {
     const downloadingCount = $("td.t_leech", el).text();
     const coverPic = "https://hdchina.org/styles/images/logo_hdchina.png";
     const torrentCategory = opts[$("td.t_cat a", el).attr("href")];
-    const torrentSource = "hdchina";
     res.push({
       chsTitle,
       engTitle,
@@ -46,7 +50,11 @@ async function hdchinaQueryParser(str) {
       torrentSource
     });
   }
-  return res;
+  return {
+    total: records,
+    source: torrentSource,
+    list: res
+  };
 }
 
 module.exports = hdchinaQueryParser;
