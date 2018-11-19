@@ -32,6 +32,7 @@
     "puppeteer": "^1.8.0",
     "redis": "^2.8.0",
     "request": "^2.88.0",
+    "rsync": "^0.6.1",
     "tesseract.js": "^1.0.10",
     "transmission": "^0.4.9"
   }
