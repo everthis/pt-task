@@ -11,7 +11,8 @@ const client = new OSS({
   region: ENV.ALI_OSS_REGION,
   accessKeyId: ENV.ALI_OSS_ACCESS_KEY_ID,
   accessKeySecret: ENV.ALI_OSS_ACCESS_KEY_SECRET,
-  bucket: ENV.ALI_OSS_BUCKET
+  bucket: ENV.ALI_OSS_BUCKET,
+  secure: true
 });
 
 uploadQueue.process(function(job) {
