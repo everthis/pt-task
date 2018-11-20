@@ -59,7 +59,7 @@ function composeFfmpegProcess(
       console.log("Ffmpeg starting conversion with command: " + commandLine);
     })
     .on("stderr", stderrLine => {
-      console.log("Stderr output: " + stderrLine);
+      // console.log("Stderr output: " + stderrLine);
     })
     .on("error", err => {
       console.log("An error occurred: " + err.message);
@@ -90,7 +90,6 @@ function composeFfmpegProcess(
         }
       };
       await setTaskLog(payload);
-      fs.unlinkSync(fpath);
       reslove(payload);
     })
     .save(mp4FilePath);
@@ -144,6 +143,7 @@ function hasEmbeddedSubCheck(fpath) {
   const targetSubTagTitle = [
     "简",
     "繁",
+    "中",
     "chs",
     "CHS",
     "Chs",
