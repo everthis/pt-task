@@ -53,7 +53,7 @@ function composeFfmpegProcess(
       console.log("Ffmpeg starting conversion with command: " + commandLine);
     })
     .on("stderr", stderrLine => {
-      console.log("Stderr output: " + stderrLine);
+      // console.log("Stderr output: " + stderrLine);
     })
     .on("error", err => {
       console.log("An error occurred: " + err.message);
@@ -198,7 +198,7 @@ function hasEmbeddedSub(fpath) {
 
 // ass
 exec(
-  "/mnt/wd8t/My Friend's Mom.2016.KR.WEB-DL.1920x1080p.x264.AAC-KOOK.mkv"
+  "/mnt/wd8t/Hotel.Transylvania.3.Summer.Vacation.2018.BluRay.720p.x264.DTS-HDChina/Hotel.Transylvania.3.Summer.Vacation.2018.BluRay.720p.x264.DTS-HDChina.mkv"
 ).catch(err => console.log(err));
 
 // no sub
