@@ -4,7 +4,7 @@ const path = require("path");
 const fs = require("fs");
 const bull = require("bull");
 const setTaskLog = require("./util/setTaskLog");
-const { REDIS_HOST_PORT, HK_USER_HOST } = process.env;
+const { REDIS_HOST_PORT, TOKYO_USER_HOST } = process.env;
 function exec(job) {
     const { fpath, hash } = job;
     const startTs = new Date().getTime();
@@ -17,7 +17,7 @@ function exec(job) {
         .flags("az")
         .progress()
         .source(
-          `${HK_USER_HOST}:${fpath}`
+          `${TOKYO_USER_HOST}:${fpath}`
         )
         .destination(fpath);
       

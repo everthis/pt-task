@@ -16,6 +16,7 @@ rsyncQueue.process(async job => {
     // Build the command
     // set --info=progress2 or --no-inc-recursive may help
     const rsync = new Rsync()
+    .set('remove-source-files')
       .shell("ssh")
       .flags("az")
       .progress()
