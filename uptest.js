@@ -42,15 +42,15 @@ function exec(job) {
           end_ts: new Date().getTime(),
           percentage: 100
         });
-        fs.unlinkSync(fpath);
-        await setTaskLog({
-          hash,
-          step: "removeConvertedFile",
-          log: {
-            fileName,
-            progress: 100
-          }
-        });
+        // fs.unlinkSync(fpath);
+        // await setTaskLog({
+        //   hash,
+        //   step: "removeConvertedFile",
+        //   log: {
+        //     fileName,
+        //     progress: 100
+        //   }
+        // });
         resolve("");
         console.log(result);
         break; // break if success
@@ -63,6 +63,7 @@ function exec(job) {
 }
 
 function setUploadProgress({ hash, percentage, fileName, start_ts, end_ts }) {
+  return "";
   return setTaskLog({
     hash,
     step: "upload",
@@ -77,5 +78,6 @@ function setUploadProgress({ hash, percentage, fileName, start_ts, end_ts }) {
 
 exec({
   hash: "ca340af3941fab7918933023e48efa72b1768e04",
-  fpath: "/home/everthis/downloads/Moana.2016.BluRay.720p.x264.DTS-HDChina.mp4"
+  fpath:
+    "/home/everthis/projects/pt-task/public/downloads/Hotel.Transylvania.3.Summer.Vacation.2018.BluRay.720p.x264.DTS-HDChina.mp4"
 });

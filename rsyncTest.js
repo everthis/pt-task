@@ -43,7 +43,8 @@ function exec(job) {
       },
       function(data) {
         console.log("stdout");
-        console.log(data.toString("utf-8").trim());
+        const str = data.toString("utf-8").trim();
+        console.log(str.split(" "));
       },
       function(data) {
         console.log("stderr");
