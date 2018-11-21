@@ -142,11 +142,11 @@ function hasEmbeddedSubCheck(fpath) {
   const targetSubTagLang = ["chi"];
   const targetSubTagTitle = [
     "简",
-    "繁",
     "中",
     "chs",
     "CHS",
     "Chs",
+    "繁",
     "CHT",
     "Cht",
     "cht"
