@@ -15,7 +15,7 @@ const { findTargetFile } = require("./ffmpeg/findTargetFile");
 const { convertFn } = require("./ffmpeg/convert");
 const { aliUpload } = require("./upload/aliOss");
 const { getSignUrl } = require("./aliOssAccess/private");
-const tokyoToHkFn = require('./rsync/tokyoToHk')
+const tokyoToHkFn = require("./rsync/tokyoToHk");
 const isLocal = process.env.NODE_ENV === "production" ? false : true;
 const listenHost = isLocal ? "localhost" : "0.0.0.0";
 const app = new Koa();
@@ -59,11 +59,11 @@ router.get("/convert", async (ctx, next) => {
   console.log("convert: ", hash);
   ctx.body = await convertFn({ fpath, hash });
 });
-router.get("/rsync", async(ctx,next) =>{
-  const {fpath, hash} = ctx.request.query
-  const p = decodeURIComponent(fpath)
-  ctx.body = await tokyoToHkFn({fpath: p, hash})
-})
+router.get("/rsync", async (ctx, next) => {
+  const { fpath, hash } = ctx.request.query;
+  const p = decodeURIComponent(fpath);
+  ctx.body = await tokyoToHkFn({ fpath: p, hash });
+});
 router.get("/upload", async (ctx, next) => {
   const { fpath, hash } = ctx.request.query;
   ctx.body = await aliUpload({
@@ -73,9 +73,15 @@ router.get("/upload", async (ctx, next) => {
 });
 
 router.get("/getSignUrl", async (ctx, next) => {
-  const { fpath } = ctx.request.query;
+  const { fpath, expires } = ctx.request.query;
   const p = decodeURIComponent(fpath);
-  ctx.body = getSignUrl(p);
+  let obj = null;
+  if (expires === "1y") {
+    obj = {
+      expires: 3600 * 24 * 365
+    };
+  }
+  ctx.body = getSignUrl(p, obj);
 });
 
 app.use(router.routes()).use(router.allowedMethods());
