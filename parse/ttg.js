@@ -7,10 +7,14 @@ async function ttgQueryParser(str) {
     const pageRow = $(
       '.mainouter > tbody > tr > td.outer > p[align="center"]'
     )[0];
-    const total = $("a:last-child b", pageRow)
-      .text()
-      .split("-")[1]
-      .trim();
+    const total = (
+      $("a:last-child b", pageRow)
+        .text()
+        .split("-")[1] ||
+      $("b:last-child", pageRow)
+        .text()
+        .split("-")[1]
+    ).trim();
     const dlsArr = Array.prototype.slice.call(dls);
     const res = [];
     for (let el of dlsArr) {

@@ -4,10 +4,14 @@ async function hdrouteQueryParser(str) {
   try {
     const $ = cheerio.load(str);
     const dls = $("#unsticky-torrent-table > dl");
-    const total = $("#pager-top > p > span a:last-child b")
-      .text()
-      .split("-")[1]
-      .trim();
+    const total = (
+      $("#pager-top > p > span a:last-child b")
+        .text()
+        .split("-")[1] ||
+      $("#pager-top > p > b")
+        .text()
+        .split("-")[1]
+    ).trim();
     const dlsArr = Array.prototype.slice.call(dls);
     const res = [];
     for (let el of dlsArr) {
