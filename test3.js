@@ -11,7 +11,7 @@ async function exec(fpath) {
     fpath,
     extname
   )}.mp4`;
-  const subResult = await hasEmbeddedSub(fpath);
+  const subResult = await hasEmbeddedSubCheck(fpath);
   console.log(subResult);
   const subtitleOptions = subOption(subResult, fpath);
 
@@ -145,9 +145,18 @@ function subOption(res = {}, fpath) {
   }
 }
 
-function hasEmbeddedSub(fpath) {
+function hasEmbeddedSubCheck(fpath) {
   const targetSubTagLang = ["chi"];
-  const targetSubTagTitle = ["简", "繁", "chs", "CHS", "Chs", "CHT", "cht"];
+  const targetSubTagTitle = [
+    "chs&eng",
+    "cht&eng",
+    "中英",
+    "简",
+    "chs",
+    "中",
+    "繁",
+    "cht"
+  ];
   return new Promise((reslove, reject) => {
     ffmpeg.ffprobe(fpath, (err, metadata) => {
       if (err) {
@@ -173,7 +182,10 @@ function hasEmbeddedSub(fpath) {
         let title = targetSubTagTitle[j];
         for (let k = 0; k < subtitlesArr.length; k++) {
           let stream = subtitlesArr[k];
-          if (stream.tags.title && stream.tags.title.indexOf(title) !== -1) {
+          if (
+            stream.tags.title &&
+            stream.tags.title.toLowerCase().indexOf(title) !== -1
+          ) {
             result.subIdx = k;
             result.subType = stream.codec_name;
             reslove(result);
@@ -197,11 +209,16 @@ function hasEmbeddedSub(fpath) {
 // ).catch(err => console.log(err));
 
 // ass
-exec(
-  "/mnt/wd8t/Hotel.Transylvania.3.Summer.Vacation.2018.BluRay.720p.x264.DTS-HDChina/Hotel.Transylvania.3.Summer.Vacation.2018.BluRay.720p.x264.DTS-HDChina.mkv"
-).catch(err => console.log(err));
+// exec(
+//   "/mnt/wd8t/Hotel.Transylvania.3.Summer.Vacation.2018.BluRay.720p.x264.DTS-HDChina/Hotel.Transylvania.3.Summer.Vacation.2018.BluRay.720p.x264.DTS-HDChina.mkv"
+// ).catch(err => console.log(err));
 
 // no sub
 // exec(
 //   "/mnt/wd8t/Young.Mother.2013.720p.HDRip.H264.AC3.Hyd/Young.Mother.2013.720p.HDRip.H264.AC3.Hyd.mkv"
 // ).catch(err => console.log(err));
+
+// no pgs
+exec(
+  "/mnt/wd8t/Ferdinand.2017.BluRay.720p.x264.DTS-HDChina/Ferdinand.2017.BluRay.720p.x264.DTS-HDChina.mkv"
+).catch(err => console.log(err));

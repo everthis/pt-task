@@ -16,5 +16,5 @@ function exec(fpath) {
 }
 
 exec(
-  "/mnt/wd8t/The.Incredibles.2.2018.720p.BluRay.x264-WiKi/The.Incredibles.2.2018.720p.BluRay.x264-WiKi.mkv"
+  "/mnt/wd8t/Ferdinand.2017.BluRay.720p.x264.DTS-HDChina/Ferdinand.2017.BluRay.720p.x264.DTS-HDChina.mkv"
 ).catch(err => console.log(err));

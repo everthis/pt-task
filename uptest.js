@@ -79,5 +79,5 @@ function setUploadProgress({ hash, percentage, fileName, start_ts, end_ts }) {
 exec({
   hash: "ca340af3941fab7918933023e48efa72b1768e04",
   fpath:
-    "/home/everthis/projects/pt-task/public/downloads/Hotel.Transylvania.3.Summer.Vacation.2018.BluRay.720p.x264.DTS-HDChina.mp4"
+    "/home/everthis/projects/pt-task/public/downloads/Ferdinand.2017.BluRay.1080p.x264.DTS-HDChina.mp4"
 });

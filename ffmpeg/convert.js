@@ -141,14 +141,13 @@ function subOption(res = {}, fpath) {
 function hasEmbeddedSubCheck(fpath) {
   const targetSubTagLang = ["chi"];
   const targetSubTagTitle = [
+    "chs&eng",
+    "cht&eng",
+    "中英",
     "简",
-    "中",
     "chs",
-    "CHS",
-    "Chs",
+    "中",
     "繁",
-    "CHT",
-    "Cht",
     "cht"
   ];
   return new Promise((reslove, reject) => {
@@ -176,7 +175,10 @@ function hasEmbeddedSubCheck(fpath) {
         let title = targetSubTagTitle[j];
         for (let k = 0; k < subtitlesArr.length; k++) {
           let stream = subtitlesArr[k];
-          if (stream.tags.title && stream.tags.title.indexOf(title) !== -1) {
+          if (
+            stream.tags.title &&
+            stream.tags.title.toLowerCase().indexOf(title) !== -1
+          ) {
             result.subIdx = k;
             result.subType = stream.codec_name;
             reslove(result);
