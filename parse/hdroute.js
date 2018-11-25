@@ -10,7 +10,8 @@ async function hdrouteQueryParser(str) {
         .split("-")[1] ||
       $("#pager-top > p > b")
         .text()
-        .split("-")[1]
+        .split("-")[1] ||
+      "0"
     ).trim();
     const dlsArr = Array.prototype.slice.call(dls);
     const res = [];

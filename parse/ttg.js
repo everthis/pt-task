@@ -13,7 +13,8 @@ async function ttgQueryParser(str) {
         .split("-")[1] ||
       $("b:last-child", pageRow)
         .text()
-        .split("-")[1]
+        .split("-")[1] ||
+      "0"
     ).trim();
     const dlsArr = Array.prototype.slice.call(dls);
     const res = [];
