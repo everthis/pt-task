@@ -20,7 +20,7 @@ rsyncQueue.process(job => {
       .shell("ssh")
       .flags("az")
       .progress()
-      .source(`${TOKYO_USER_HOST}:${fpath}`)
+      .source(`${TOKYO_USER_HOST}:"${fpath}"`)
       .destination(fpath);
 
     // Execute the command
