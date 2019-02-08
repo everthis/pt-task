@@ -6,3 +6,4 @@
 
 ### ffmpeg problems
 * `height not divisible by 2`
+* subtitle empty box problem
