@@ -59,7 +59,7 @@ function composeFfmpegProcess(
       console.log("Ffmpeg starting conversion with command: " + commandLine);
     })
     .on("stderr", stderrLine => {
-      // console.log("Stderr output: " + stderrLine);
+      console.log("Stderr output: " + stderrLine);
     })
     .on("error", err => {
       console.log("An error occurred: " + err.message);
@@ -103,11 +103,7 @@ function subOption(res = {}, fpath) {
   if (res.subType == null) {
     return {
       output: ["-map", "[output]", "-map", "0:a"],
-      complex: [
-        [
-          `[0:v]scale='min(1280,iw)':min'(720,ih)':force_original_aspect_ratio=decrease[output]`
-        ]
-      ]
+      complex: [[`[0:v]scale=1280:trunc(ow/a/2)*2[output]`]]
     };
   }
   if (res.subType.indexOf("ass") !== -1) {
@@ -115,7 +111,7 @@ function subOption(res = {}, fpath) {
       output: ["-map", "[output]", "-map", "0:a"],
       complex: [
         [
-          `[0:v]scale='min(1280,iw)':min'(720,ih)':force_original_aspect_ratio=decrease[scaled]`,
+          `[0:v]scale=1280:trunc(ow/a/2)*2[scaled]`,
           {
             filter: "subtitles",
             options: { f: p, si: res.subIdx },
@@ -130,7 +126,7 @@ function subOption(res = {}, fpath) {
       output: ["-map", "[output]", "-map", "0:a"],
       complex: [
         [
-          `[0:v]scale='min(1280,iw)':min'(720,ih)':force_original_aspect_ratio=decrease[scaled]`,
+          `[0:v]scale=1280:trunc(ow/a/2)*2[scaled]`,
           `[scaled][0:s:${res.subIdx}]overlay[output]`
         ]
       ]
